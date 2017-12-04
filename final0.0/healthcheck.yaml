@@ -1,0 +1,116 @@
+swagger: '2.0'
+info:
+  title: Pet Shop Example API
+  version: "0.1"
+consumes:
+  - application/json
+produces:
+  - application/json
+
+paths:
+  /healthcheck/{device_type}/{device_id}:
+    get:
+      operationId: healthcheck.perform_hc
+      summary: Get the response for all the health check conditions
+      parameters:
+        - $ref: '#/parameters/device_type'
+        - $ref: '#/parameters/device_id'
+      responses:
+        200:
+          description: list of conditions of health check
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/IPAddress'
+          examples:
+            'application/json':
+              cheese: "cheddar"
+
+  /healthcheck/{device_type}/{device_id}/{command}:
+    get:
+      operationId: healthcheck.perform_hc_full
+      summary: Get the response for all the health check conditions
+      parameters:
+        - $ref: '#/parameters/device_type'
+        - $ref: '#/parameters/device_id'
+        - $ref: '#/parameters/command'
+      responses:
+        200:
+          description: list of conditions of health check
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/IPAddress'
+          examples:
+            'application/json':
+              cheese: "cheddar"
+
+parameters:
+  device_id:
+    name: device_id
+    description: device ID of theh user object
+    in:  path
+    type: string
+    required: true
+    pattern: "^[a-zA-Z0-9-]+$"
+
+  command :
+    name: command
+    description: parameter to end the command to perform operation on the provided ip_addr
+    in:  path
+    type: string
+    required: true
+    pattern: "^[a-zA-Z0-9-.]+$"
+
+  device_type :
+    name: device_type
+    description: specifies the type of device
+    in:  path
+    type: string
+    required: true
+    pattern: "^[a-zA-Z0-9-.]+$"
+
+  node_id:
+    name: node_id
+    description: device ID of theh device object
+    in:  path
+    type: string
+    required: true
+    pattern: "^[a-zA-Z0-9-]+$"
+
+  ip_addr : 
+    name: ip_addr
+    description: parameter to get the log of given server
+    in: path
+    type: string
+    required: true
+    pattern: '^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$'
+
+  username :
+    name: username
+    description: parameter to pass the username for the given device
+    in:  path
+    type: string
+    required: true
+    pattern: "^[a-zA-Z0-9-]+$"
+
+  password :
+    name: password
+    description: parameter to pass the password for the device
+    in:  path
+    type: string
+    required: true
+    pattern: "^[a-zA-Z0-9-]+$"
+
+definitions:
+  IPAddress:
+    type: object
+    required:
+      - ip_value
+    properties:
+      ip_value:
+        type: string
+        description: Pet's name
+        example: "192.168.122.0"
+
+

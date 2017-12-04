@@ -1,0 +1,483 @@
+import re
+
+
+class DataExractor:
+    SHOW_LOGGING_TEMPLATE = r'show logging'
+    BUFFER_LOGGING_TEMPLATE = r'Buffer logging: level debugging, (.+?) messages logged, xml disabled,'
+    TRAP_LOGGING_TEMPLATE = r'Trap logging: level informational, (.+?) message lines logged'
+    SHOW_LDP_NEIGHBOUR_TEMPLATE = r'show mpls ldp neighbor'
+    PEER_LDP_TEMPLATE = r'Peer LDP Ident'
+    SHOW_MLPS_TEMPLATE = r'show mpls interfaces'
+    SHOW_MLPS_START_TEMPLATE = r'Interface IP Tunnel BGP Static Operational'
+    SHOW_BRIEF_TEMPLATE = r'show ip int brief'
+    SHOW_BRIEF_START_TEMPLATE = r'Interface IP-Address OK? Method Status Protocol'
+    SHOW_BFD_NEIGHBOUR_TEMPLATE = r'show bfd neighbor'
+    SHOW_BFD_NEIGHBOUR_START_TEMPLATE = r'NeighAddr LD/RD RH/RS State Int'
+    SHOW_PLATFORM_TEMPLATE = r'show platform'
+    SHOW_PLATFORM_END_TEMPLATE = r'Slot CPLD Version Firmware Version'
+    SHOW_RUNNING_CONFIG_TEMPLATE = r'show running-config | i boot'
+    SHOW_VERSION_TEMPLATE = r'show version'
+    SHOW_VERSION_NUMBER_TEMPLATE = r'Version (.+?), RELEASE SOFTWARE (.+?)'
+    SHOW_VERSION_CONFIG_TEMPLATE = r'0x[0-9A-F]+'
+    SHOW_VERSION_TYPE_TEMPLATE = r'(.+?) ((.+?)) processor ((.+?)) with (.+?)/(.+?) bytes of memory.'
+    UTILIZATION_TEMPLATE = r'CPU utilization for five seconds: (.+?)/(.+?); one minute: (.+?); five minutes: (.+?%)'
+    MISSES_TEMPLATE = r'(.+?) hits, (.+?) misses, (.+?) trims, (.+?) created'
+    CRITICAL_ALARM_TEMPLATE = r'Number of Critical alarms:  (.+?)'
+    MAJOR_ALARM_TEMPLATE = r'Number of Major alarms:     (.+?)'
+    MINOR_ALARM_TEMPLATE = r'Number of Minor alarms:     (.+?)'
+    MEMORY_STATISTICS_TEMPLATE = r'(.+?)show memory statistics'
+    SHOW_BUFFERS_TEMPLATE = r'(.+?)show buffers'
+    SHOW_BUFFERS_MISS_TEMPLATE_A = r'(.+?) hits, (.+?) misses, (.+?) created'
+    SHOW_BUFFERS_MISS_TEMPLATE_B = r'(.+?) hits, (.+?) misses, (.+?) trims, (.+?) created'
+    SHOW_BUFFERS_MISS_TEMPLATE_C = r'(.+?) hits in cache, (.+?) misses in cache'
+    SHOW_INTERFACES_TEMPLATE = r'show interfaces'
+    COUNT_INTERFACES_TEMPLATE = r'(.+?) is (.+?), line protocol is (.+?)'
+    SUCCESS_RATE_TEMPLATE = r'Success rate is (.+?) percent (.+?), round-trip min/avg/max = (.+?) ms'
+    SHOW_BGPV6_ROUTES = r'show ip bgp vpnv6 unicast vrf LTE'
+    BGPV6_ROUTES_TEMPLATE_A = r'(.+?)::(.+?) ::(.+?):(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'
+    BGPV6_ROUTES_TEMPLATE_B = r'(.+?) ::(.+?):(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'
+    SHOW_BGPV4_1XRTT = r'show ip bgp vpnv4 vrf 1XRTT'
+    SHOW_BGPV4_RAN = r'show ip bgp vpnv4 vrf RAN'
+    SHOW_BGPV4_CELL_MGMT = r'show ip bgp vpnv4 vrf CELL_MGMT'
+    SHOW_XCONNECT_ALL = r'show xconnect all'
+    XCONNECT_FILTER_TEMPLATE = r'(.+?)=(.+?) (.+?)=(.+?) (.+?)=(.+?) (.+?)=(.+?)'
+    BGPV4_NEIGHBOURS = r'show ip bgp vpnv4 all summary'
+    BGPV6_NEIGHBOURS = r'show ip bgp vpnv6 unicast all summary'
+    BGPVN_NEIGHBOURS_TEMPLATE = r'(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}) (.+?) (.+?) (.+?) (.+?) (.+?) (.+?) (.+?) (.+?)'
+
+    def segment_extract(self, SEGMENT, string_to_search):
+        # Fetch only section lines
+        regex = re.compile(SEGMENT)
+        line_data = []
+        found = False
+        first_occurence = True
+        for line in string_to_search:
+            if regex.search(line) or found:
+                found = True
+                if not first_occurence:
+                    if (line.find("#") != -1):
+                        break
+                    else:
+                        line_x = line.strip()
+                        line_x = " ".join(line_x.split())
+                        line_data.append(line_x)
+                first_occurence = False
+        return line_data
+
+    def extract_2000_5000(self, command, string_to_search=open('hc.txt').readlines()):
+        line_data = self.segment_extract(command, string_to_search)
+        return_dict = {"sucess": None}
+        result = 1
+        for line in line_data:
+            m = re.search(DataExractor.SUCCESS_RATE_TEMPLATE, line)
+            if m:
+                return_dict["sucess"] = m.group(2)
+                result = 0
+
+        return_dict.update({'R': result})
+        return return_dict
+
+    def count_interfaces(self, string_to_search=open('hc.txt').readlines()):
+        line_data = self.segment_extract(DataExractor.SHOW_INTERFACES_TEMPLATE, string_to_search)
+        cleaned_data = "\n".join(_ for _ in line_data)
+        m = re.findall(DataExractor.COUNT_INTERFACES_TEMPLATE, cleaned_data)
+        if m:
+            return {"count_interfaces": len(m), 'R': 0}
+        else:
+            return {"count_interfaces": None, 'R': 1}
+
+    def extract_show_logging(self, string_to_search=open('hc.txt').readlines()):
+        line_data = self.segment_extract(DataExractor.SHOW_LOGGING_TEMPLATE, string_to_search)
+        return_dict = {}
+        for line in line_data:
+            # if line:
+            m = re.search(DataExractor.BUFFER_LOGGING_TEMPLATE, line)
+            if m:
+                return_dict["buffer_logging"] = m.group(1)
+            m = re.search(DataExractor.TRAP_LOGGING_TEMPLATE, line)
+            if m:
+                return_dict["trap_logging"] = m.group(1)
+		#return_dict["message"]= {"buffer_logging":x, "trap_logging": t}
+        return return_dict
+
+    def extract_mlps_ldp_neighbour(self, string_to_search=open('hc.txt').readlines()):
+        line_data = self.segment_extract(DataExractor.SHOW_LDP_NEIGHBOUR_TEMPLATE, string_to_search)
+        count = 0
+        result = 1
+        for line in line_data:
+            if line:
+                if DataExractor.PEER_LDP_TEMPLATE in line:
+                    count += 1
+                    result = 0
+        return {"count": count, "R": result}
+
+    def extract_mlps_interfaces(self, string_to_search=open('hc.txt').readlines()):
+        line_data = self.segment_extract(DataExractor.SHOW_MLPS_TEMPLATE, string_to_search)
+        start = False
+        return_dict = {}
+        id_index = None
+        operational_index = None
+        cleaned_lines = []
+        result = 1
+        for idx, line in enumerate(line_data):
+            tindex = 0
+            sp_line = line.split()
+            for token in sp_line:
+                if token == "(ldp)":
+                    sp_line[tindex - 1] += sp_line[tindex]
+                    del sp_line[tindex]
+                tindex += 1
+            cleaned_lines.append(" ".join(_ for _ in sp_line))
+
+        for line in cleaned_lines:
+            if start:
+                if line:
+                    device = line.split()[0]
+                    ip_status = line.split()[id_index]
+                    operational_status = line.split()[operational_index]
+                    return_dict[device] = {"ip": ip_status, "operational": operational_status}
+                    result = 0
+            if line == DataExractor.SHOW_MLPS_START_TEMPLATE:
+                for idx, label in enumerate(line.split()):
+                    if label == "IP":
+                        id_index = idx
+                    if label == "Operational":
+                        operational_index = idx
+                start = True
+        return_dict.update({'R': result})
+        return return_dict
+
+    def extract_show_brief(self,string_to_search= open('hc.txt').readlines()):
+        line_data = self.segment_extract(DataExractor.SHOW_BRIEF_TEMPLATE,string_to_search)
+        start = False
+        return_dict = {}
+        result = 0
+        for line in line_data:
+            #print line
+            if start:
+                if line:
+                    #print line
+                    if 'down' in line:
+                        #print line
+                        result = 1
+                    device = line.split()[0]
+                    status = line.split()[4]
+                    #print device
+                    if status == "administratively":
+                        status += " " + line.split()[5]
+                    return_dict[device] = status
+            if line == DataExractor.SHOW_BRIEF_START_TEMPLATE:
+                start = True
+        return_dict.update({'R':result})
+        return return_dict
+
+    def extract_bfd_neighbour(self, string_to_search=open('hc.txt').readlines()):
+        line_data = self.segment_extract(DataExractor.SHOW_BFD_NEIGHBOUR_TEMPLATE, string_to_search)
+        start = False
+        return_dict = {}
+        result = 1
+        for line in line_data:
+            if start:
+                if line:
+                    addr = line.split()[0]
+                    state = line.split()[3]
+                    return_dict[addr] = state
+                    result = 0
+            if line == DataExractor.SHOW_BFD_NEIGHBOUR_START_TEMPLATE:
+                start = True
+
+        return_dict.update({'R': result})
+        return return_dict
+
+    def extract_show_platform(self, string_to_search=open('hc.txt').readlines()):
+        line_data = self.segment_extract(DataExractor.SHOW_PLATFORM_TEMPLATE, string_to_search)
+        start_label = "---------------------"
+        start = False
+        cleaned_data = []
+        result = 1
+        for line in line_data:
+            if line and len(line.split()) > 2:
+                if start:
+                    if line == DataExractor.SHOW_PLATFORM_END_TEMPLATE:
+                        break
+                    cleaned_data.append(line)
+                else:
+                    if line.split()[2] == start_label:
+                        start = True
+        return_dict = {}
+        bdevice = 0
+        formatted_line = []
+        for line in cleaned_data:
+            fx = []
+            temp = None
+            ix = 0
+            for i, x in enumerate(line.split()):
+                if (ix >= len(line.split())):
+                    break
+                if "," in x:
+                    val = line.split()[ix] + line.split()[ix + 1]
+                    ix += 2
+                else:
+                    val = line.split()[ix]
+                    ix += 1
+                fx.append(val)
+            formatted_line.append(fx)
+
+        for line in formatted_line:
+            if len(line) == 3:
+                return_dict["blank_device_%s" % (bdevice,)] = line[1]
+                bdevice += 1
+            else:
+                return_dict[line[1]] = line[2]
+                result = 0
+        return_dict.update({'R': result})
+        return return_dict
+
+    def extract_version(self, string_to_search=open('hc.txt').readlines()):
+        return_dict = {}
+        result = 1
+        line_data = self.segment_extract(DataExractor.SHOW_VERSION_TEMPLATE, string_to_search)
+        for line in line_data:
+            m = re.search(DataExractor.SHOW_VERSION_NUMBER_TEMPLATE, line)
+            if m:
+                return_dict["version"] = m.group(1)
+                result = 0
+            m = re.findall(DataExractor.SHOW_VERSION_CONFIG_TEMPLATE, line, re.I)
+            if m:
+                return_dict["configuration"] = m[0]
+                result = 0
+            m = re.search(DataExractor.SHOW_VERSION_TYPE_TEMPLATE, line)
+            if m:
+                type_ = m.group(2).split("-")[:2]
+                type_ = "".join(type_).lower()
+                return_dict["type"] = type_
+                result = 0
+        return_dict.update({'R': result})
+        return return_dict
+
+    def extract_show_running_config(self, string_to_search=open('hc.txt').readlines(), version_to_search={}):
+        return_dict = {"type_match": False}
+        line_data = self.segment_extract(DataExractor.SHOW_RUNNING_CONFIG_TEMPLATE, string_to_search)
+        type_ = version_to_search
+        for line in line_data:
+            if type_["type"] in line:
+                return_dict["type_match"] = True
+        return return_dict
+
+    def extract_utilization(self, string_to_search=open('hc.txt').read()):
+        """
+		To extract the utilization percentages
+		CPU utilization for five seconds:     'CPU utilization for five seconds: '
+		(.+?)                    match any value i.e., alpha-numeric + special characters
+			one minute: 'one minute:'
+			(.+?)                    match any value i.e., alpha-numeric + special characters
+				five minutes: 'five minutes'
+					(.+?)                    match any value i.e., alpha-numeric + special characters
+
+		"""
+        m = re.search(DataExractor.UTILIZATION_TEMPLATE, string_to_search)
+        return {"five_seconds": str(m.group(1)) + "/" + str(m.group(2)),
+                "one_minute": m.group(3),
+                "five_minutes": m.group(4)}
+
+    def extract_alarms(self, string_to_search=open('hc.txt').read()):
+        critical = re.search(DataExractor.CRITICAL_ALARM_TEMPLATE, string_to_search)
+        major = re.search(DataExractor.MAJOR_ALARM_TEMPLATE, string_to_search)
+        minor = re.search(DataExractor.MINOR_ALARM_TEMPLATE, string_to_search)
+        number_of_minor = None
+        number_of_major = None
+        number_of_critical = None
+        try:
+            if critical:
+                number_of_critical = int(critical.group(1))
+            if major:
+                number_of_major = int(major.group(1))
+            if minor:
+                number_of_minor = int(minor.group(1))
+            if ((number_of_critical is None) or (number_of_major is None) or (number_of_minor is None)):
+                return {"total_alarms": None}
+            return {"total_alarms": number_of_critical + number_of_major + number_of_minor, "R": 0}
+        except ValueError as e:
+            print("[x] Invalid convert from char/char* to int")
+        return {"total_alarms": None, "R": 1}
+
+    def extract_memory_statistics(self, string_to_search=open('hc.txt').readlines()):
+        # Fetch only section lines
+        regex = re.compile(DataExractor.MEMORY_STATISTICS_TEMPLATE)
+        line_data = []
+        found = False
+        first_occurence = True
+        for line in string_to_search:
+            if regex.search(line) or found:
+                found = True
+                if not first_occurence:
+                    if (line.find("#") != -1):
+                        break
+                    else:
+                        line_x = line.strip()
+                        line_x = " ".join(line_x.split())
+                        line_data.append(line_x.split(" "))
+                first_occurence = False
+        # Extraction Logic
+        label_index_to_use = None
+        line_index_to_use = None
+        for ix, line in enumerate(line_data):
+            for iy, inner_line in enumerate(line):
+                if inner_line == "Free(b)":
+                    label_index_to_use = iy
+                    line_index_to_use = ix
+        try:
+            return {"Free(b)": line_data[line_index_to_use + 1][label_index_to_use + 1], "R": 0}
+        except:
+            return {"Free(b)": None, "R": 1}
+
+    def extract_buffers(self, string_to_search=open('hc.txt').readlines()):
+        return_dict = {}
+        line_data = self.segment_extract(DataExractor.SHOW_BUFFERS_TEMPLATE, string_to_search)
+        ix = 0
+        result = 1
+        for line in line_data:
+            m = re.search(DataExractor.SHOW_BUFFERS_MISS_TEMPLATE_A, line)
+            if m:
+                return_dict[ix] = m.group(2)
+                ix += 1
+                result = 0
+            else:
+                m = re.search(DataExractor.SHOW_BUFFERS_MISS_TEMPLATE_B, line)
+                if m:
+                    return_dict[ix] = m.group(2)
+                    ix += 1
+                    result = 0
+                else:
+                    m = re.search(DataExractor.SHOW_BUFFERS_MISS_TEMPLATE_C, line)
+                    if m:
+                        return_dict[ix] = m.group(2)
+                        ix += 1
+                        result = 0
+
+        return_dict.update({'R': result})
+        return return_dict
+
+    def extract_bgpv6_routes(self, string_to_search=open('./hc.txt').readlines()):
+        line_data = self.segment_extract(DataExractor.SHOW_BGPV6_ROUTES, string_to_search)
+        return_dict = {}
+        result = 1
+        for line in line_data:
+            m = re.search(DataExractor.BGPV6_ROUTES_TEMPLATE_A, line)
+            if m:
+                key_ = m.group(1) + "::" + m.group(2)
+                value_ = "::" + m.group(3) + ":" + m.group(4)
+                return_dict[key_] = value_
+                result = 0
+
+            if ('*>i' in line) or ('*>' in line):
+                key_, value_ = line.split(' ')
+                return_dict[key_] = value_
+                result = 0
+
+        return_dict.update({'R': result})
+        return return_dict
+
+    def extract_bgpv4_1xrtt(self, string_to_search=open('./hc.txt').readlines()):
+        line_data = self.segment_extract(DataExractor.SHOW_BGPV4_1XRTT, string_to_search)
+        return_dict = {}
+        result = 1
+        for line in line_data:
+            if ('*mi' in line):
+                data = line.split(' ')
+                key_ = data[0] + ' ' + data[1]
+                value_ = data[2]
+                return_dict[key_] = value_
+                result = 0
+
+            if ('*>i' in line) or ('*>' in line):
+                data = line.split(' ')
+                key_ = data[0]
+                value_ = data[1]
+                return_dict[key_] = value_
+                result = 0
+        return_dict.update({'R': result})
+        return return_dict
+
+    def extract_bgpv4_ran(self, string_to_search=open('./hc.txt').readlines()):
+        line_data = self.segment_extract(DataExractor.SHOW_BGPV4_RAN, string_to_search)
+        return_dict = {}
+        result = 1
+        for line in line_data:
+            if ('*mi' in line):
+                data = line.split(' ')
+                key_ = data[0] + ' ' + data[1]
+                value_ = data[2]
+                return_dict[key_] = value_
+                result = 0
+
+            if ('*>i' in line) or ('*>' in line):
+                data = line.split(' ')
+                key_ = data[0]
+                value_ = data[1]
+                return_dict[key_] = value_
+                result = 0
+
+        return_dict.update({'R': result})
+        return return_dict
+
+    def extract_bgpv4_cell_mgmt(self, string_to_search=open('./hc.txt').readlines()):
+        line_data = self.segment_extract(DataExractor.SHOW_BGPV4_CELL_MGMT, string_to_search)
+        return_dict = {}
+        result = 1
+        for line in line_data:
+            if ('*mi' in line):
+                data = line.split(' ')
+                key_ = data[0] + ' ' + data[1]
+                value_ = data[2]
+                return_dict[key_] = value_
+                result = 0
+
+            if ('*>i' in line) or ('*>' in line):
+                data = line.split(' ')
+                key_ = data[0]
+                value_ = data[1]
+                return_dict[key_] = value_
+                result = 0
+
+        return_dict.update({'R': result})
+        return return_dict
+
+    def xconect_all(self, string_to_search=open('./hc.txt').readlines()):
+        line_data = self.segment_extract(DataExractor.SHOW_XCONNECT_ALL, string_to_search)
+        cnt = 0
+        result = 1
+        for line in line_data:
+            if ('LEGEND' not in line):
+                m = re.search(DataExractor.XCONNECT_FILTER_TEMPLATE, line)
+                if not m:
+                    if 'UP' in line:
+                        cnt += 1
+                        result = 0
+        return {"count": cnt, "R": result}
+
+    def bgpv4_neighbour(self, string_to_search=open('./hc.txt').readlines()):
+        line_data = self.segment_extract(DataExractor.BGPV4_NEIGHBOURS, string_to_search)
+        neighbours = []
+        result = 1
+        for line in line_data:
+            m = re.search(DataExractor.BGPVN_NEIGHBOURS_TEMPLATE, line)
+            if m:
+                neighbours.append(m.groups())
+                result = 0
+        return {"neighbours": len(neighbours), "R": result}
+
+    def bgpv6_neighbour(self, string_to_search=open('./hc.txt').readlines()):
+        line_data = self.segment_extract(DataExractor.BGPV6_NEIGHBOURS, string_to_search)
+        neighbours = []
+        result = 1
+        for line in line_data:
+            m = re.search(DataExractor.BGPVN_NEIGHBOURS_TEMPLATE, line)
+            if m:
+                neighbours.append(m.groups())
+                result = 0
+        return {"neighbours": len(neighbours), "R": result}
+
+
+dextractor = DataExractor()
+print dextractor.extract_show_brief()
