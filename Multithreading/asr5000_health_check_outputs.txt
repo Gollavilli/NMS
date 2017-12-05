@@ -1,0 +1,545 @@
+[local]ASR5K_1# show clock
+Wednesday November 08 17:10:03 UTC 2017
+Wednesday November 08 17:10:03 UTC 2017
+
+
+
+[local]ASR5K_1# show system uptime
+Wednesday October 18 23:51:09 UTC 2017
+System uptime: 8D 10H 40M
+
+
+[local]ASR5K_1# show version | grep "Image Version"
+Wednesday October 18 23:53:03 UTC 2017
+  Image Version:                  18.1.0
+
+[local]ASR5K_1# show srp info | grep "Chassis State"
+Wednesday October 18 23:54:00 UTC 2017
+Chassis State:                 Active
+
+
+[local]ASR5K_1# show alarm outstanding
+Wednesday October 18 23:58:51 UTC 2017
+Sev Object          Event
+--- ----------      ------------------------------------------------------------
+CR  Chassis         Power removed from filter B
+MN  Card 8          The System Management Card in slot 8 is a single point of failure. Another System Management Card of the same type is needed.
+MN  Card 20         The 10 Gig Ethernet Line Card in slot 20 is a single point of failure. A 10 Gig Ethernet Line Card is needed in slot 19.
+MN  Card 26         The 10 Gig Ethernet Line Card in slot 26 is a single point of failure. A 10 Gig Ethernet Line Card is needed in slot 23.
+MN  Card 28         The 10 Gig Ethernet Line Card in slot 28 is a single point of failure. A 10 Gig Ethernet Line Card is needed in slot 27.
+MN  Card 30         The 10 Gig Ethernet Line Card in slot 30 is a single point of failure. A 10 Gig Ethernet Line Card is needed in slot 29.
+MN  Card 23         The 10 Gig Ethernet Line Card in slot 23 is a single point of failure. A 10 Gig Ethernet Line Card is needed in slot 26.
+MN  Card 27         The 10 Gig Ethernet Line Card in slot 27 is a single point of failure. A 10 Gig Ethernet Line Card is needed in slot 28.
+MN  Card 29         The 10 Gig Ethernet Line Card in slot 29 is a single point of failure. A 10 Gig Ethernet Line Card is needed in slot 30.
+ 
+
+[local]ASR5K_1# show task resources | grep -v good
+Thursday October 19 17:06:53 UTC 2017
+                   task   cputime        memory     files      sessions
+ cpu facility      inst used allc   used  alloc used allc  used  allc S status
+----------------------- --------- ------------- --------- ------------- ------
+Total               893 602.83%   48.78G        16350         0
+
+
+
+[local]ASR5K_1# show hd raid | grep "Degrad"
+Thursday October 19 00:16:02 UTC 2017
+  Degraded                  : Yes
+
+
+[local]ASR5K_1# show context
+Thursday October 19 00:16:52 UTC 2017
+Context Name    ContextID    State     Description
+--------------- --------- ----------   -----------------------
+local           1            Active
+EHAin           2            Active
+EHAout-MPLS01   3            Active
+EHAout-MPLS02   4            Active
+EHAout-MPLS03   5            Active
+EHAout-MPLS04   6            Active
+EHAout-MPLS05   7            Active
+EHAout-MPLS06   8            Active
+EHAout-MPLS07   9            Active
+EHAout-MPLS08   10           Active
+EHAout-MPLS09   11           Active
+EHAout-MPLS10   12           Active
+EHAout-MPLS11   13           Active
+EHAout-MPLS12   14           Active
+ECS             15           Active
+EXGWin          16           Active
+EHAout-MPLS13   17           Active
+EHAout-MPLS14   18           Active
+EHAout-MPLS15   19           Active
+EHAout-MPLS16   20           Active
+SRP             21           Active
+srp             22           Active
+
+
+[local]ASR5K_1# show service all
+Thursday October 19 00:19:47 UTC 2017
+ContextID   ServiceID   ContextName   ServiceName   State         MaxSessions   Type
+---------   ---------   -----------   -----------   ----------    -----------   ----
+2           1           EHAin         3G-NEMO-VIP   Started       4500000       ha
+2           2           EHAin         HA-MPN101     Started       4500000       ha
+2           3           EHAin         HA-MPN102     Started       4500000       ha
+2           4           EHAin         HA-MPN103     Started       4500000       ha
+2           5           EHAin         HA-MPN104     Started       4500000       ha
+2           6           EHAin         HA-MPN105     Started       4500000       ha
+2           7           EHAin         HA-NEMO       Initialized   4500000       ha
+2           8           EHAin         combo-ha-srv-01 Initialized   4500000       ha
+16          1           EXGWin        IMS-GX        Started       0             imsa
+16          9           EXGWin        GTPU-GPS8     Started       0             gtpu
+16          10          EXGWin        GTPU1         Started       0             gtpu
+16          11          EXGWin        GGSN1         Started       4000000       ggsn
+16          12          EXGWin        4G-NEMO-VIP   Started       4500000       ha
+16          13          EXGWin        LTE-NEMO-01   Started       4500000       ha
+16          14          EXGWin        LMA1          Started       4500000       mipv6ha
+16          15          EXGWin        EGTP-S8       Started       0             egtp
+16          16          EXGWin        EGTP1         Started       0             egtp
+16          17          EXGWin        PGW-S8        Started       4000000       pgw
+16          18          EXGWin        PGW1          Started       4000000       pgw
+
+
+[local]ASR5K_1# show card hardware | grep Prog
+Thursday October 19 00:21:17 UTC 2017
+  Card Programmables      : up to date
+  Card Programmables      : up to date
+  Card Programmables      : up to date
+  Card Programmables      : up to date
+  Card Programmables      : up to date
+  Card Programmables      : up to date
+  Card Programmables      : up to date
+  Card Programmables      : up to date
+  Card Programmables      : up to date
+  Card Programmables      : up to date
+  Card Programmables      : up to date
+  Card Programmables      : up to date
+  Card Programmables      : up to date
+  Card Programmables      : up to date
+  Card Programmables      : up to date
+  Card Programmables      : up to date
+  Card Programmables      : up to date
+  Card Programmables      : up to date
+  Card Programmables      : up to date
+  Card Programmables      : up to date
+  Card Programmables      : up to date
+  Card Programmables      : up to date
+  Card Programmables      : up to date
+  Card Programmables      : up to date
+  Card Programmables      : up to date
+  Card Programmables      : up to date
+  Card Programmables      : up to date
+  Card Programmables      : up to date
+  Card Programmables      : up to date
+  Card Programmables      : up to date
+  Card Programmables      : up to date
+
+
+
+[local]ASR5K_1# show card info | grep "Card Lock"
+Thursday October 19 00:24:16 UTC 2017
+  Card Lock               : Locked
+  Card Lock               : Locked
+  Card Lock               : Locked
+  Card Lock               : Locked
+  Card Lock               : Locked
+  Card Lock               : Locked
+  Card Lock               : Locked
+  Card Lock               : Locked
+  Card Lock               : Locked
+  Card Lock               : Locked
+  Card Lock               : Locked
+  Card Lock               : Locked
+  Card Lock               : Locked
+  Card Lock               : Locked
+  Card Lock               : Locked
+  Card Lock               : Locked
+  Card Lock               : Locked
+  Card Lock               : Locked
+  Card Lock               : Locked
+  Card Lock               : Locked
+  Card Lock               : Locked
+  Card Lock               : Locked
+  Card Lock               : Locked
+  Card Lock               : Locked
+  Card Lock               : Locked
+  Card Lock               : Locked
+  Card Lock               : Locked
+  Card Lock               : Unlocked
+  Card Lock               : Locked
+  Card Lock               : Locked
+  Card Lock               : Locked
+
+
+[local]ASR5K_1# show session recovery status verbose
+Thursday October 19 00:30:56 UTC 2017
+Session Recovery Status:
+  Overall Status        : Ready For Recovery
+  Last Status Update    : 8 seconds ago
+
+              ----sessmgr---  ----aaamgr----  demux
+ cpu state    active standby  active standby  active  status
+---- -------  ------ -------  ------ -------  ------  -------------------------
+ 1/0 Active   0      0        0      0        29      Good (Demux)
+ 2/0 Active   16     1        16     1        0       Good
+ 3/0 Active   16     1        16     1        0       Good
+ 4/0 Active   16     1        16     1        0       Good
+ 5/0 Active   16     1        16     1        0       Good
+ 6/0 Active   16     1        16     1        0       Good
+ 7/0 Active   16     1        16     1        0       Good
+10/0 Active   16     1        16     1        0       Good
+11/0 Active   16     1        16     1        0       Good
+12/0 Active   16     1        16     1        0       Good
+13/0 Active   16     1        16     1        0       Good
+14/0 Active   16     1        16     1        0       Good
+15/0 Active   16     1        16     1        0       Good
+16/0 Standby  0      16       0      16       0       Good
+
+
+
+[local]ASR5K_1# show resource | grep License
+Thursday October 19 00:32:50 UTC 2017
+    License Status      : Within Acceptable Limits
+    License Status      : Within Acceptable Limits
+    License Status      : Within Acceptable Limits
+    License Status      : Within Acceptable Limits
+
+
+
+[local]ASR5K_1# show license info | grep "License Status"
+Thursday October 19 00:34:28 UTC 2017
+  License Status         Good (Redundant)
+
+
+
+[local]ASR5K_1# show srp checkpoint statistics | grep Sessmgrs
+Thursday October 19 00:35:39 UTC 2017
+  Number of Sessmgrs:                   192
+  Sessmgrs in Active-Connected state:   0
+  Sessmgrs in Standby-Connected state:  0
+  Sessmgrs in Pending-Active state:     0
+
+
+
+[local]ASR5K_1# show srp info
+Thursday October 19 00:36:56 UTC 2017
+Service Redundancy Protocol:
+-------------------------------------------------------------------------------
+Context:                       SRP
+Local Address:                 10.211.209.5
+Chassis State:                 Active
+Chassis Mode:                  Primary
+Chassis Priority:              1
+Local Tiebreaker:              00-05-47-02-5B-CA
+Route-Modifier:                33
+
+Peer Remote Address:           10.211.209.4
+Peer State:                    Init
+Peer Mode:                     Init
+Peer Priority:                 0
+Peer Tiebreaker:               00-00-00-00-00-00
+Peer Route-Modifier:           0
+Last Hello Message received:   -
+Peer Configuration Validation: Complete
+Last Peer Configuration Error: None
+Last Peer Configuration Event: -
+Last Validate Switchover Status: None
+Connection State:              Initializing
+Next Peer Audit Scheduled:
+   Periodicity Audit Scheduled      : -
+   Daily-Start-time Audit Scheduled : -
+   Cron-Job Audit Scheduled         : -
+Peer Audit State:              Unknown
+Last Peer Audit Type:          Unknown
+Last Peer Audit Successful:    -
+DSCP Configuration:
+   Control flow   :            be
+   Session flow   :            be
+
+
+[local]ASR5K_1# show card table | grep -E -v "Active|Standby|None"
+Thursday October 19 00:48:25 UTC 2017
+Slot         Card Type                               Oper State     SPOF  Attach
+-----------  --------------------------------------  -------------  ----  ------
+
+
+
+[local]ASR5K_1# show task resources | grep sessmg
+Thursday October 19 00:50:20 UTC 2017
+ 2/0 sessmgr       5006 0.5%  50% 87.46M 200.0M   18  500    --    -- S   good
+ 2/0 sessmgr          2 0.6% 100% 174.5M  1.19G   22  500     0 21120 I   good
+ 2/0 sessmgr         13 0.8% 100% 174.6M  1.19G   21  500     0 21120 I   good
+ 2/0 sessmgr         25 0.8% 100% 174.8M  1.19G   21  500     0 21120 I   good
+ 2/0 sessmgr         42 0.7% 100% 174.7M  1.19G   21  500     0 21120 I   good
+ 2/0 sessmgr         49 0.8% 100% 174.6M  1.19G   21  500     0 21120 I   good
+ 2/0 sessmgr         72 0.7% 100% 174.7M  1.19G   21  500     0 21120 I   good
+ 2/0 sessmgr         73 0.8% 100% 174.8M  1.19G   21  500     0 21120 I   good
+ 2/0 sessmgr         80 0.7% 100% 174.7M  1.19G   21  500     0 21120 I   good
+ 2/0 sessmgr        103 0.8% 100% 174.8M  1.19G   21  500     0 21120 I   good
+ 2/0 sessmgr        124 0.6% 100% 174.7M  1.19G   21  500     0 21120 I   good
+ 2/0 sessmgr        127 0.7% 100% 174.8M  1.19G   21  500     0 21120 I   good
+ 2/0 sessmgr        134 0.7% 100% 174.7M  1.19G   21  500     0 21120 I   good
+ 2/0 sessmgr        138 0.6% 100% 174.7M  1.19G   21  500     0 21120 I   good
+ 2/0 sessmgr        145 0.8% 100% 174.8M  1.19G   21  500     0 21120 I   good
+ 2/0 sessmgr        168 0.7% 100% 174.7M  1.19G   21  500     0 21120 I   good
+ 2/0 sessmgr        181 0.8% 100% 174.8M  1.19G   21  500     0 21120 I   good
+ 3/0 sessmgr       5008 0.5%  50% 87.47M 200.0M   15  500    --    -- S   good
+ 3/0 sessmgr          3 0.7% 100% 174.4M  1.19G   18  500     0 21120 I   good
+ 3/0 sessmgr         14 0.6% 100% 174.5M  1.19G   17  500     0 21120 I   good
+ 3/0 sessmgr         26 0.7% 100% 174.5M  1.19G   20  500     0 21120 I   good
+ 3/0 sessmgr         41 0.8% 100% 174.6M  1.19G   20  500     0 21120 I   good
+ 3/0 sessmgr         50 0.6% 100% 174.5M  1.19G   20  500     0 21120 I   good
+ 3/0 sessmgr         71 0.8% 100% 174.5M  1.19G   20  500     0 21120 I   good
+ 3/0 sessmgr         74 0.7% 100% 174.5M  1.19G   20  500     0 21120 I   good
+ 3/0 sessmgr         79 0.8% 100% 174.5M  1.19G   20  500     0 21120 I   good
+ 3/0 sessmgr        104 0.6% 100% 174.5M  1.19G   18  500     0 21120 I   good
+ 3/0 sessmgr        125 0.8% 100% 174.6M  1.19G   21  500     0 21120 I   good
+ 3/0 sessmgr        128 0.7% 100% 174.5M  1.19G   21  500     0 21120 I   good
+ 3/0 sessmgr        135 0.9% 100% 174.6M  1.19G   21  500     0 21120 I   good
+ 3/0 sessmgr        140 0.7% 100% 174.5M  1.19G   21  500     0 21120 I   good
+ 3/0 sessmgr        147 0.8% 100% 174.5M  1.19G   21  500     0 21120 I   good
+ 3/0 sessmgr        182 0.6% 100% 174.6M  1.19G   21  500     0 21120 I   good
+ 3/0 sessmgr        187 0.7% 100% 174.6M  1.19G   21  500     0 21120 I   good
+ 4/0 sessmgr       5010 0.5%  50% 88.06M 200.0M   18  500    --    -- S   good
+ 4/0 sessmgr          4 0.6% 100% 175.1M  1.19G   22  500     0 21120 I   good
+ 4/0 sessmgr         15 0.7% 100% 175.0M  1.19G   20  500     0 21120 I   good
+ 4/0 sessmgr         27 0.8% 100% 175.1M  1.19G   21  500     0 21120 I   good
+ 4/0 sessmgr         44 0.7% 100% 175.1M  1.19G   21  500     0 21120 I   good
+ 4/0 sessmgr         51 0.7% 100% 175.1M  1.19G   21  500     0 21120 I   good
+ 4/0 sessmgr         56 0.6% 100% 175.2M  1.19G   21  500     0 21120 I   good
+ 4/0 sessmgr         75 0.8% 100% 175.1M  1.19G   21  500     0 21120 I   good
+ 4/0 sessmgr         82 0.7% 100% 175.0M  1.19G   20  500     0 21120 I   good
+ 4/0 sessmgr        105 0.7% 100% 175.1M  1.19G   20  500     0 21120 I   good
+ 4/0 sessmgr        126 0.7% 100% 175.1M  1.19G   20  500     0 21120 I   good
+ 4/0 sessmgr        129 0.9% 100% 175.1M  1.19G   21  500     0 21120 I   good
+ 4/0 sessmgr        136 0.7% 100% 175.1M  1.19G   21  500     0 21120 I   good
+ 4/0 sessmgr        141 0.8% 100% 175.1M  1.19G   21  500     0 21120 I   good
+ 4/0 sessmgr        146 0.6% 100% 175.1M  1.19G   21  500     0 21120 I   good
+ 4/0 sessmgr        183 0.8% 100% 175.1M  1.19G   21  500     0 21120 I   good
+ 4/0 sessmgr        188 0.7% 100% 175.1M  1.19G   21  500     0 21120 I   good
+ 5/0 sessmgr       5012 0.5%  50% 87.48M 200.0M   17  500    --    -- S   good
+ 5/0 sessmgr          5 0.8% 100% 174.6M  1.19G   21  500     0 21120 I   good
+ 5/0 sessmgr         16 0.7% 100% 174.5M  1.19G   20  500     0 21120 I   good
+ 5/0 sessmgr         28 0.7% 100% 174.5M  1.19G   20  500     0 21120 I   good
+ 5/0 sessmgr         43 0.8% 100% 174.5M  1.19G   20  500     0 21120 I   good
+ 5/0 sessmgr         52 0.6% 100% 174.5M  1.19G   20  500     0 21120 I   good
+ 5/0 sessmgr         55 0.8% 100% 174.5M  1.19G   20  500     0 21120 I   good
+ 5/0 sessmgr         76 0.7% 100% 174.5M  1.19G   19  500     0 21120 I   good
+ 5/0 sessmgr         81 0.8% 100% 174.5M  1.19G   20  500     0 21120 I   good
+ 5/0 sessmgr         97 0.8% 100% 174.5M  1.19G   20  500     0 21120 I   good
+ 5/0 sessmgr        106 0.7% 100% 174.5M  1.19G   20  500     0 21120 I   good
+ 5/0 sessmgr        115 0.8% 100% 174.5M  1.19G   20  500     0 21120 I   good
+ 5/0 sessmgr        132 0.6% 100% 174.5M  1.19G   20  500     0 21120 I   good
+ 5/0 sessmgr        137 0.8% 100% 174.5M  1.19G   20  500     0 21120 I   good
+ 5/0 sessmgr        142 0.7% 100% 174.5M  1.19G   20  500     0 21120 I   good
+ 5/0 sessmgr        184 0.7% 100% 174.5M  1.19G   20  500     0 21120 I   good
+ 5/0 sessmgr        189 0.7% 100% 174.6M  1.19G   20  500     0 21120 I   good
+ 6/0 sessmgr       5014 0.5%  50% 88.07M 200.0M   18  500    --    -- S   good
+ 6/0 sessmgr          6 0.7% 100% 175.0M  1.19G   21  500     0 21120 I   good
+ 6/0 sessmgr         17 0.7% 100% 175.0M  1.19G   21  500     0 21120 I   good
+ 6/0 sessmgr         29 0.9% 100% 175.1M  1.19G   21  500     0 21120 I   good
+ 6/0 sessmgr         46 0.7% 100% 175.0M  1.19G   21  500     0 21120 I   good
+ 6/0 sessmgr         53 0.8% 100% 175.1M  1.19G   21  500     0 21120 I   good
+ 6/0 sessmgr         58 0.7% 100% 175.1M  1.19G   21  500     0 21120 I   good
+ 6/0 sessmgr         77 0.8% 100% 175.0M  1.19G   21  500     0 21120 I   good
+ 6/0 sessmgr         84 0.6% 100% 175.0M  1.19G   20  500     0 21120 I   good
+ 6/0 sessmgr         98 0.7% 100% 175.1M  1.19G   20  500     0 21120 I   good
+ 6/0 sessmgr        107 0.8% 100% 175.1M  1.19G   20  500     0 21120 I   good
+ 6/0 sessmgr        116 0.7% 100% 175.1M  1.19G   20  500     0 21120 I   good
+ 6/0 sessmgr        139 0.8% 100% 175.1M  1.19G   20  500     0 21120 I   good
+ 6/0 sessmgr        143 0.8% 100% 175.1M  1.19G   21  500     0 21120 I   good
+ 6/0 sessmgr        148 0.7% 100% 175.1M  1.19G   21  500     0 21120 I   good
+ 6/0 sessmgr        185 0.8% 100% 175.0M  1.19G   21  500     0 21120 I   good
+ 6/0 sessmgr        190 0.7% 100% 175.1M  1.19G   20  500     0 21120 I   good
+ 7/0 sessmgr       5016 0.5%  50% 88.03M 200.0M   18  500    --    -- S   good
+ 7/0 sessmgr          7 0.8% 100% 175.2M  1.19G   22  500     0 21120 I   good
+ 7/0 sessmgr         18 0.7% 100% 175.0M  1.19G   21  500     0 21120 I   good
+ 7/0 sessmgr         30 0.7% 100% 175.0M  1.19G   21  500     0 21120 I   good
+ 7/0 sessmgr         45 0.8% 100% 175.1M  1.19G   21  500     0 21120 I   good
+ 7/0 sessmgr         54 0.7% 100% 175.0M  1.19G   21  500     0 21120 I   good
+ 7/0 sessmgr         57 0.8% 100% 175.0M  1.19G   21  500     0 21120 I   good
+ 7/0 sessmgr         78 0.6% 100% 175.0M  1.19G   21  500     0 21120 I   good
+ 7/0 sessmgr         83 0.9% 100% 175.0M  1.19G   20  500     0 21120 I   good
+ 7/0 sessmgr         99 0.8% 100% 175.0M  1.19G   20  500     0 21120 I   good
+ 7/0 sessmgr        108 0.6% 100% 175.0M  1.19G   20  500     0 21120 I   good
+ 7/0 sessmgr        109 0.8% 100% 175.1M  1.19G   20  500     0 21120 I   good
+ 7/0 sessmgr        144 0.7% 100% 175.1M  1.19G   21  500     0 21120 I   good
+ 7/0 sessmgr        149 0.8% 100% 175.1M  1.19G   21  500     0 21120 I   good
+ 7/0 sessmgr        156 0.7% 100% 175.1M  1.19G   21  500     0 21120 I   good
+ 7/0 sessmgr        186 0.7% 100% 175.0M  1.19G   21  500     0 21120 I   good
+ 7/0 sessmgr        191 0.7% 100% 175.1M  1.19G   21  500     0 21120 I   good
+10/0 sessmgr       5018 0.5%  50% 88.07M 200.0M   14  500    --    -- S   good
+10/0 sessmgr         12 0.7% 100% 175.1M  1.19G   20  500     0 21120 I   good
+10/0 sessmgr         19 0.8% 100% 175.0M  1.19G   20  500     0 21120 I   good
+10/0 sessmgr         32 0.7% 100% 175.0M  1.19G   20  500     0 21120 I   good
+10/0 sessmgr         47 0.8% 100% 175.1M  1.19G   20  500     0 21120 I   good
+10/0 sessmgr         59 0.8% 100% 175.1M  1.19G   20  500     0 21120 I   good
+10/0 sessmgr         62 0.7% 100% 175.1M  1.19G   20  500     0 21120 I   good
+10/0 sessmgr         85 0.8% 100% 175.1M  1.19G   20  500     0 21120 I   good
+10/0 sessmgr         92 0.7% 100% 175.1M  1.19G   20  500     0 21120 I   good
+10/0 sessmgr        100 0.7% 100% 175.1M  1.19G   20  500     0 21120 I   good
+10/0 sessmgr        111 0.8% 100% 175.1M  1.19G   21  500     0 21120 I   good
+10/0 sessmgr        117 0.9% 100% 175.1M  1.19G   21  500     0 21120 I   good
+10/0 sessmgr        150 0.7% 100% 175.1M  1.19G   21  500     0 21120 I   good
+10/0 sessmgr        155 0.8% 100% 175.1M  1.19G   21  500     0 21120 I   good
+10/0 sessmgr        158 0.6% 100% 175.1M  1.19G   21  500     0 21120 I   good
+10/0 sessmgr        169 0.8% 100% 175.1M  1.19G   21  500     0 21120 I   good
+10/0 sessmgr        176 0.7% 100% 175.1M  1.19G   21  500     0 21120 I   good
+11/0 sessmgr       5020 0.5%  50% 88.04M 200.0M   14  500    --    -- S   good
+11/0 sessmgr          8 0.7% 100% 175.0M  1.19G   20  500     0 21120 I   good
+11/0 sessmgr         21 0.7% 100% 175.0M  1.19G   20  500     0 21120 I   good
+11/0 sessmgr         33 0.9% 100% 175.1M  1.19G   20  500     0 21120 I   good
+11/0 sessmgr         48 0.7% 100% 175.0M  1.19G   19  500     0 21120 I   good
+11/0 sessmgr         60 0.7% 100% 175.0M  1.19G   20  500     0 21120 I   good
+11/0 sessmgr         61 0.7% 100% 175.0M  1.19G   20  500     0 21120 I   good
+11/0 sessmgr         86 0.7% 100% 175.0M  1.19G   20  500     0 21120 I   good
+11/0 sessmgr         91 0.8% 100% 175.1M  1.19G   20  500     0 21120 I   good
+11/0 sessmgr        101 0.8% 100% 175.0M  1.19G   20  500     0 21120 I   good
+11/0 sessmgr        110 0.6% 100% 175.0M  1.19G   21  500     0 21120 I   good
+11/0 sessmgr        118 0.7% 100% 175.1M  1.19G   21  500     0 21120 I   good
+11/0 sessmgr        157 0.8% 100% 175.2M  1.19G   21  500     0 21120 I   good
+11/0 sessmgr        165 0.9% 100% 175.2M  1.19G   21  500     0 21120 I   good
+11/0 sessmgr        170 0.7% 100% 175.2M  1.19G   21  500     0 21120 I   good
+11/0 sessmgr        171 0.8% 100% 175.2M  1.19G   21  500     0 21120 I   good
+11/0 sessmgr        178 0.7% 100% 175.2M  1.19G   21  500     0 21120 I   good
+12/0 sessmgr       5022 0.5%  50% 87.44M 200.0M   18  500    --    -- S   good
+12/0 sessmgr          9 0.8% 100% 174.5M  1.19G   22  500     0 21120 I   good
+12/0 sessmgr         20 0.7% 100% 174.6M  1.19G   21  500     0 21120 I   good
+12/0 sessmgr         34 0.7% 100% 174.4M  1.19G   21  500     0 21120 I   good
+12/0 sessmgr         37 0.8% 100% 174.5M  1.19G   21  500     0 21120 I   good
+12/0 sessmgr         63 0.8% 100% 174.5M  1.19G   21  500     0 21120 I   good
+12/0 sessmgr         68 0.7% 100% 174.5M  1.19G   21  500     0 21120 I   good
+12/0 sessmgr         87 0.8% 100% 174.5M  1.19G   21  500     0 21120 I   good
+12/0 sessmgr         94 0.7% 100% 174.5M  1.19G   21  500     0 21120 I   good
+12/0 sessmgr        102 0.7% 100% 174.5M  1.19G   21  500     0 21120 I   good
+12/0 sessmgr        113 0.8% 100% 174.6M  1.19G   21  500     0 21120 I   good
+12/0 sessmgr        119 0.8% 100% 174.5M  1.19G   21  500     0 21120 I   good
+12/0 sessmgr        152 0.6% 100% 174.5M  1.19G   21  500     0 21120 I   good
+12/0 sessmgr        159 0.9% 100% 174.5M  1.19G   20  500     0 21120 I   good
+12/0 sessmgr        166 0.6% 100% 174.5M  1.19G   20  500     0 21120 I   good
+12/0 sessmgr        172 0.7% 100% 174.5M  1.19G   21  500     0 21120 I   good
+12/0 sessmgr        175 0.8% 100% 174.6M  1.19G   21  500     0 21120 I   good
+13/0 sessmgr       5000 0.5%  50% 87.58M 200.0M   18  500    --    -- S   good
+13/0 sessmgr          1 0.8% 100% 174.6M  1.19G   22  500     0 21120 I   good
+13/0 sessmgr         22 0.6% 100% 174.5M  1.19G   20  500     0 21120 I   good
+13/0 sessmgr         35 0.9% 100% 174.5M  1.19G   21  500     0 21120 I   good
+13/0 sessmgr         38 0.7% 100% 174.5M  1.19G   21  500     0 21120 I   good
+13/0 sessmgr         64 0.6% 100% 174.5M  1.19G   21  500     0 21120 I   good
+13/0 sessmgr         67 0.8% 100% 174.5M  1.19G   21  500     0 21120 I   good
+13/0 sessmgr         88 0.6% 100% 174.5M  1.19G   20  500     0 21120 I   good
+13/0 sessmgr         93 0.7% 100% 174.6M  1.19G   20  500     0 21120 I   good
+13/0 sessmgr        112 0.6% 100% 174.6M  1.19G   19  500     0 21120 I   good
+13/0 sessmgr        121 0.8% 100% 174.5M  1.19G   20  500     0 21120 I   good
+13/0 sessmgr        120 0.7% 100% 174.5M  1.19G   20  500     0 21120 I   good
+13/0 sessmgr        151 0.8% 100% 174.6M  1.19G   20  500     0 21120 I   good
+13/0 sessmgr        160 0.6% 100% 174.5M  1.19G   21  500     0 21120 I   good
+13/0 sessmgr        167 0.8% 100% 174.6M  1.19G   21  500     0 21120 I   good
+13/0 sessmgr        173 0.8% 100% 174.5M  1.19G   21  500     0 21120 I   good
+13/0 sessmgr        180 0.6% 100% 174.5M  1.19G   21  500     0 21120 I   good
+14/0 sessmgr       5002 0.4%  50% 88.04M 200.0M   15  500    --    -- S   good
+14/0 sessmgr         10 0.6% 100% 175.1M  1.19G   19  500     0 21120 I   good
+14/0 sessmgr         23 0.8% 100% 175.1M  1.19G   20  500     0 21120 I   good
+14/0 sessmgr         36 0.6% 100% 175.0M  1.19G   20  500     0 21120 I   good
+14/0 sessmgr         39 0.7% 100% 175.1M  1.19G   20  500     0 21120 I   good
+14/0 sessmgr         65 0.7% 100% 175.1M  1.19G   20  500     0 21120 I   good
+14/0 sessmgr         70 0.6% 100% 175.1M  1.19G   19  500     0 21120 I   good
+14/0 sessmgr         89 0.7% 100% 175.1M  1.19G   19  500     0 21120 I   good
+14/0 sessmgr         96 0.6% 100% 175.1M  1.19G   19  500     0 21120 I   good
+14/0 sessmgr        114 0.6% 100% 175.1M  1.19G   20  500     0 21120 I   good
+14/0 sessmgr        123 0.8% 100% 175.1M  1.19G   20  500     0 21120 I   good
+14/0 sessmgr        130 0.6% 100% 175.1M  1.19G   20  500     0 21120 I   good
+14/0 sessmgr        153 0.7% 100% 175.1M  1.19G   20  500     0 21120 I   good
+14/0 sessmgr        161 0.7% 100% 175.1M  1.19G   21  500     0 21120 I   good
+14/0 sessmgr        164 0.6% 100% 175.1M  1.19G   21  500     0 21120 I   good
+14/0 sessmgr        174 0.6% 100% 175.1M  1.19G   21  500     0 21120 I   good
+14/0 sessmgr        177 0.7% 100% 175.1M  1.19G   21  500     0 21120 I   good
+15/0 sessmgr       5004 0.5%  50% 88.01M 200.0M   18  500    --    -- S   good
+15/0 sessmgr         11 0.8% 100% 175.1M  1.19G   22  500     0 21120 I   good
+15/0 sessmgr         24 0.7% 100% 175.0M  1.19G   19  500     0 21120 I   good
+15/0 sessmgr         31 0.8% 100% 175.1M  1.19G   21  500     0 21120 I   good
+15/0 sessmgr         40 0.7% 100% 175.1M  1.19G   20  500     0 21120 I   good
+15/0 sessmgr         66 0.6% 100% 175.0M  1.19G   21  500     0 21120 I   good
+15/0 sessmgr         69 0.7% 100% 175.1M  1.19G   21  500     0 21120 I   good
+15/0 sessmgr         90 0.7% 100% 175.1M  1.19G   19  500     0 21120 I   good
+15/0 sessmgr         95 0.8% 100% 175.1M  1.19G   20  500     0 21120 I   good
+15/0 sessmgr        122 0.7% 100% 175.1M  1.19G   20  500     0 21120 I   good
+15/0 sessmgr        131 0.8% 100% 175.1M  1.19G   20  500     0 21120 I   good
+15/0 sessmgr        133 0.8% 100% 175.1M  1.19G   19  500     0 21120 I   good
+15/0 sessmgr        154 0.6% 100% 175.1M  1.19G   20  500     0 21120 I   good
+15/0 sessmgr        162 0.6% 100% 175.0M  1.19G   20  500     0 21120 I   good
+15/0 sessmgr        163 0.8% 100% 175.1M  1.19G   20  500     0 21120 I   good
+15/0 sessmgr        179 0.8% 100% 175.1M  1.19G   21  500     0 21120 I   good
+15/0 sessmgr        192 0.7% 100% 175.0M  1.19G   21  500     0 21120 I   good
+16/0 sessmgr       5024 0.5%  50% 87.57M 200.0M   18  500    --    -- S   good
+16/0 sessmgr       5025 0.5%  50% 89.50M 200.0M   19  500    --    -- S   good
+16/0 sessmgr       5026 0.5%  50% 89.51M 200.0M   19  500    --    -- S   good
+16/0 sessmgr       5027 0.6%  50% 89.48M 200.0M   19  500    --    -- S   good
+16/0 sessmgr       5028 0.5%  50% 89.52M 200.0M   19  500    --    -- S   good
+16/0 sessmgr       5029 0.6%  50% 89.52M 200.0M   19  500    --    -- S   good
+16/0 sessmgr       5030 0.5%  50% 89.53M 200.0M   19  500    --    -- S   good
+16/0 sessmgr       5031 0.7%  50% 89.54M 200.0M   19  500    --    -- S   good
+16/0 sessmgr       5032 0.4%  50% 89.55M 200.0M   19  500    --    -- S   good
+16/0 sessmgr       5033 0.6%  50% 89.55M 200.0M   19  500    --    -- S   good
+16/0 sessmgr       5034 0.4%  50% 89.56M 200.0M   19  500    --    -- S   good
+16/0 sessmgr       5035 0.7%  50% 89.56M 200.0M   19  500    --    -- S   good
+16/0 sessmgr       5036 0.5%  50% 89.57M 200.0M   19  500    --    -- S   good
+16/0 sessmgr       5037 0.6%  50% 89.58M 200.0M   19  500    --    -- S   good
+16/0 sessmgr       5038 0.4%  50% 89.58M 200.0M   19  500    --    -- S   good
+16/0 sessmgr       5039 0.6%  50% 89.58M 200.0M   19  500    --    -- S   good
+
+
+
+[local]ASR5K_1# show diameter peers full | grep "Total peers"
+Thursday October 19 00:59:08 UTC 2017
+  Total peers matching specified criteria: 9
+
+
+[local]ASR5K_1# show crash list
+Thursday October 19 01:00:11 UTC 2017
+=== ==================== ======== ========== =============== =======================
+#           Time         Process  Card/CPU/        SW          HW_SER_NUM
+                                     PID         VERSION       SMC / Crash Card
+=== ==================== ======== ========== =============== =======================
+
+1   2017-Apr-01+16:14:22 npumgr   15/1/00893 18.1.0          SAD172100ER/PLB47099820
+
+Total Crashes : 1
+
+
+[local]ASR5K_1# show rct stats
+Thursday October 19 01:01:08 UTC 2017
+
+RCT stats Summary
+-----------------
+Migrations  =      0
+Switchovers =      0
+
+
+
+[local]ASR5K_1# show task resources | grep diamproxy
+Thursday October 19 01:02:28 UTC 2017
+ 1/0 diamproxy        1 6.9%  90% 33.50M 132.0M  752 2500    --    -- -   good
+
+
+[local]ASR5K_1# show task resources | grep -v good
+Thursday October 19 17:06:53 UTC 2017
+                   task   cputime        memory     files      sessions
+ cpu facility      inst used allc   used  alloc used allc  used  allc S status
+----------------------- --------- ------------- --------- ------------- ------
+Total               893 602.83%   48.78G        16350         0
+
+
+
+[local]ASR5K_1# show alarm outstanding
+Wednesday October 18 23:58:51 UTC 2017
+Sev Object          Event
+--- ----------      ------------------------------------------------------------
+CR  Chassis         Power removed from filter B
+MN  Card 8          The System Management Card in slot 8 is a single point of failure. Another System Management Card of the same type is needed.
+MN  Card 20         The 10 Gig Ethernet Line Card in slot 20 is a single point of failure. A 10 Gig Ethernet Line Card is needed in slot 19.
+MN  Card 26         The 10 Gig Ethernet Line Card in slot 26 is a single point of failure. A 10 Gig Ethernet Line Card is needed in slot 23.
+MN  Card 28         The 10 Gig Ethernet Line Card in slot 28 is a single point of failure. A 10 Gig Ethernet Line Card is needed in slot 27.
+MN  Card 30         The 10 Gig Ethernet Line Card in slot 30 is a single point of failure. A 10 Gig Ethernet Line Card is needed in slot 29.
+MN  Card 23         The 10 Gig Ethernet Line Card in slot 23 is a single point of failure. A 10 Gig Ethernet Line Card is needed in slot 26.
+MN  Card 27         The 10 Gig Ethernet Line Card in slot 27 is a single point of failure. A 10 Gig Ethernet Line Card is needed in slot 28.
+MN  Card 29         The 10 Gig Ethernet Line Card in slot 29 is a single point of failure. A 10 Gig Ethernet Line Card is needed in slot 30.
