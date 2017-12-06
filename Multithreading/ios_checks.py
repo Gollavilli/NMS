@@ -77,7 +77,7 @@ def show_interfaces(output, response):
 
 # Checks the Memory available at the Device
 def show_memory_statistics(output, response):
-    value = dextractor.extract_memory_statistics()  # output.split("\n")
+    value = dextractor.extract_memory_statistics(output.split("\n"))  # output.split("\n")
     R = value.get('R', 1)
     free_mem = "Free memory = %s" % (value.get("Free(b)", ""))
     response["freememory"] = {"message": free_mem, "R": R}
@@ -154,7 +154,7 @@ def show_running_config_i_boot(output, response):
 
 # Checks the count for BGPv6 Routes
 def show_ip_bgp_v6_vrf_lte(output, response):
-    ifaces = dextractor.extract_bgpv6_routes()  # output.split("\n")
+    ifaces = dextractor.extract_bgpv6_routes(output.split("\n"))  # output.split("\n")
     cnt = None
     if ifaces.has_key('R'):
         R = ifaces.pop('R')
@@ -180,7 +180,7 @@ def show_ip_bgp_v4_vrf_1xrtt(output, response):
 
 # Checks the BGPv4 Routes for the device
 def show_ip_bgp_v4_ran(output, response):
-    ifaces = dextractor.extract_bgpv4_ran()  # output.split("\n")
+    ifaces = dextractor.extract_bgpv4_ran(output.split("\n"))  # output.split("\n")
     cnt = None
     if ifaces.has_key('R'):
         R = ifaces.pop('R')
